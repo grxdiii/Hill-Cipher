@@ -1,10 +1,13 @@
 #include "stdio.h"
 #include "stdlib.h"
+#include "string.h"
 
 #define WORD_LENGTH 45
 
 int **store_matrix(FILE *key_file, int **key_matrix, int *matrix_size);
 void print_matrix(int **key_matrix, int matrix_size);
+void remove_special_characters(char *buffer);
+void read_plaintext(FILE *plaintext_file, char *buffer);
 
 int main(int argc, char *argv[]) {
     /* Our programm will start by opening the key and plain text file 
@@ -15,15 +18,16 @@ int main(int argc, char *argv[]) {
     char buffer[WORD_LENGTH]; 
 
     /* Variables to store our matrix and its size */
-    int **key_matrix; 
-    int matrix_size;
+    int **key_matrix, matrix_size; 
     
     /* Produces our matrix as desired */
     key_matrix = store_matrix(key_file, key_matrix, &matrix_size);
     print_matrix(key_matrix, matrix_size);
+    read_plaintext(plaintext_file, buffer);
 
     fclose(key_file);
     fclose(plaintext_file);
+
     return 0;
 }
 
@@ -60,4 +64,27 @@ void print_matrix(int **key_matrix, int matrix_size) {
     }
 
     printf("\n\n");
+}
+
+void remove_special_characters(char *buffer) {
+    int ascii_value;
+
+    for(int i = 0; i < strlen(buffer); i++) {
+        ascii_value = buffer[i];
+
+        if(ascii_value < 48 || (ascii_value > 57 && ascii_value < 65) || (ascii_value > 99 && ascii_value < 97) || ascii_value > 122) {
+            memmove(buffer + i, buffer + i + 1, strlen(buffer) - 1);
+        }
+    }
+}
+
+void read_plaintext(FILE *plaintext_file, char *buffer) {
+    int char_count = 0;
+
+    while(feof(plaintext_file) == 0) {
+        fscanf(plaintext_file, "%s", buffer);
+        remove_special_characters(buffer);
+        printf("%s", buffer);
+        char_count += strlen(buffer);
+    }
 }
