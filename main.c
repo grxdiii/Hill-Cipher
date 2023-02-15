@@ -1,8 +1,9 @@
 #include "stdio.h"
 #include "stdlib.h"
 #include "string.h"
+#include "ctype.h"
 
-#define WORD_LENGTH 45
+#define WORD_LENGTH 100
 
 int **store_matrix(FILE *key_file, int **key_matrix, int *matrix_size);
 void print_matrix(int **key_matrix, int matrix_size);
@@ -58,7 +59,7 @@ void print_matrix(int **key_matrix, int matrix_size) {
 
     for(int i = 0; i < matrix_size; i++) {
         for(int j = 0; j < matrix_size; j++) {
-            printf("  %d ", key_matrix[i][j]);
+            printf("  %2d  ", key_matrix[i][j]);
         }
         printf("\n");
     }
@@ -66,14 +67,25 @@ void print_matrix(int **key_matrix, int matrix_size) {
     printf("\n\n");
 }
 
+void remove_char(char *buffer, int location) {
+    if(location > strlen(buffer)) {
+        return ;
+    }
+
+    for(int i = location; i < strlen(buffer); i++) {
+        buffer[i] = buffer[i + 1];
+    }
+
+    buffer[strlen(buffer)] = '\0';
+}
+
 void remove_special_characters(char *buffer) {
-    int ascii_value;
-
+    
     for(int i = 0; i < strlen(buffer); i++) {
-        ascii_value = buffer[i];
-
-        if(ascii_value < 48 || (ascii_value > 57 && ascii_value < 65) || (ascii_value > 99 && ascii_value < 97) || ascii_value > 122) {
-            memmove(buffer + i, buffer + i + 1, strlen(buffer) - 1);
+        buffer[i] = tolower(buffer[i]);
+    
+        if(isalpha(buffer[i]) == 0) {
+           remove_char(buffer, i);
         }
     }
 }
@@ -84,6 +96,7 @@ void read_plaintext(FILE *plaintext_file, char *buffer) {
     while(feof(plaintext_file) == 0) {
         fscanf(plaintext_file, "%s", buffer);
         remove_special_characters(buffer);
+
         printf("%s", buffer);
         char_count += strlen(buffer);
     }
