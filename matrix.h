@@ -37,6 +37,7 @@ void print_matrix(int **key_matrix, int matrix_size)
     printf("\n\n");
 }
 
+/* Frees the memory allocated through malloc */
 void free_matrix(int **key_matrix, int matrix_size) 
 {
     for(int i = 0; i < matrix_size; i++) 
