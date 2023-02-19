@@ -1,3 +1,5 @@
+#include "string.h"
+
 /* This function will read our key file and produce our desired matrix */
 int **store_matrix(FILE *key_file, int **key_matrix, int *matrix_size) 
 {
@@ -47,4 +49,45 @@ void free_matrix(int **key_matrix, int matrix_size)
 
     free(key_matrix);
     key_matrix = NULL;
+}
+
+/* Encrypts our cypher text */
+void matrix_multiplication(char *plaintext, char *cyphertext, int **key_matrix, int matrix_size, int location)
+{
+    int letter_value, temp_location;
+
+    /* Loops through our key matrix */
+    for(int i = 0; i < matrix_size; i++)
+    {
+        temp_location = location - i;
+        letter_value = 0;
+        
+        /* Finds our char aplhabetical value and multiplies it with our matrix */
+        for(int j = 0; j < matrix_size; j++)
+        {
+            letter_value = letter_value + (key_matrix[i][j] * (plaintext[temp_location] - 97));
+            temp_location++;
+        }
+        
+        cyphertext[location] = (letter_value % 26) + 97;
+        location++;
+    }
+}
+
+/* Produces our cypher text as desired */
+char *produce_cyphertext(char *plaintext, int **key_matrix, int matrix_size)
+{
+    /* Allocates space for our cypher text */
+    char *cyphertext = malloc(sizeof(char *) * (strlen(plaintext) + 1));
+
+    /* Encrypts our plain text */
+    for(int i = 0; i < strlen(plaintext); i+=matrix_size) 
+    {
+        matrix_multiplication(plaintext, cyphertext, key_matrix, matrix_size, i);
+    }
+
+    /* Prints our cypher text */
+    printf("Cyphertext: \n%s\n", cyphertext);
+
+    return cyphertext;
 }

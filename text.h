@@ -52,10 +52,10 @@ void plainttext_padding(char *plainttext, int matrix_size, int *characters_read)
 }
 
 /* Frees the memory allocated through malloc */
-void free_plaintext(char *plaintext)
+void free_text(char *text)
 {
-    free(plaintext);
-    plaintext = NULL;
+    free(text);
+    text = NULL;
 }
 
 /* Reads our plain text file */
@@ -90,7 +90,7 @@ char *read_plaintext(FILE *plaintext_file, char *buffer, int matrix_size)
 
     /* Pads our text file if needed based on the requirements laid down on our instruction file */
     plainttext_padding(plaintext, matrix_size, &characters_read);
-    printf("Plaintext: \n%s\n", plaintext);
+    printf("Plaintext: \n%s\n\n", plaintext);
 
     return plaintext;
 }
