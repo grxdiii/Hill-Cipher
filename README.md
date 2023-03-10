@@ -1,16 +1,14 @@
 # Hill-Cipher
 
-## About the Program
-
 This is a small implememtation of the Hill Cipher, written for my Security in Computing course. The program reads in two files, one containing a message and another containing a matrix, and encrypts it each block of text using matrix multiplation.
 
-## Compiling Instruction 
+## Compiling the Program
 
 ```gcc -o main main.c matrix.c text.c```
 
 ## Executing the Program
 
-```./main ./pa01testing/k5.txt ./pa01testing/p5.txt```
+```./main ./pa01testing/key_file_name.txt ./pa01testing/plain_text_file_name.txt```
 
 ## Academic Integrity Statement
 
