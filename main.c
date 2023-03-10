@@ -1,5 +1,5 @@
-#include "stdio.h"
-#include "stdlib.h"
+#include <stdio.h>
+#include <stdlib.h>
 
 #include "matrix.h"
 #include "text.h"
@@ -13,8 +13,7 @@ int main(int argc, char *argv[])
     int **key_matrix;
     int matrix_size; 
     
-    char buffer[WORD_LENGHT]; 
-    
+    char buffer[WORD_LENGTH]; 
     char *plaintext = NULL; 
     char *cyphertext = NULL;
 
