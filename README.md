@@ -4,11 +4,15 @@ This is a small implememtation of the Hill Cipher, written for my Security in Co
 
 ## Compiling the Program
 
-```gcc -o main main.c matrix.c text.c```
+```
+gcc -o main main.c matrix.c text.c
+```
 
 ## Executing the Program
 
-```./main ./pa01testing/key_file_name.txt ./pa01testing/plain_text_file_name.txt```
+```
+./main ./pa01testing/key_file_name.txt ./pa01testing/plain_text_file_name.txt
+```
 
 ## Academic Integrity Statement
 
